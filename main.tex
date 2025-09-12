@@ -91,7 +91,29 @@ A \cup B = \{1,2\} \cup \{3,4\} = \{1,2,3,4\}
 
 \textbf{Statement:} Using a proof by induction, show that for all $n > 5$, $2^n > 5n$.
 
+
 \textbf{Proof by Induction:}
+
+\textbf{Base Case:} Let $n = 6$.
+$2^6 = 64 \quad \text{and} \quad 5 \cdot 6 = 30$
+Since $64 > 30$, the base case holds.
+
+\textbf{Inductive Hypothesis:} Assume that for some $k \geq 6$, $2^k > 5k$.
+
+\textbf{Inductive Step:} We need to show that $2^{k+1} > 5(k+1)$.
+
+$2^{k+1} = 2 \cdot 2^k > 2 \cdot 5k = 10k$
+(by the inductive hypothesis)
+
+We need to show that $10k > 5(k+1) = 5k + 5$.
+
+This is equivalent to showing $10k > 5k + 5$, or $5k > 5$, or $k > 1$.
+
+Since $k \geq 6 > 1$, we have $10k > 5k + 5$.
+
+Therefore, $2^{k+1} > 10k > 5k + 5 = 5(k+1)$.
+
+By mathematical induction, $2^n > 5n$ for all $n > 5$.
 
 \section*{Problem 4}
 
@@ -100,4 +122,33 @@ $$(\neg p \vee q) \wedge (p \wedge (p \wedge q)) \Leftrightarrow (p \wedge q)$$
 
 \textbf{Truth Table:}
 
+\begin{center}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+    \hline
+    $p$ & $q$ & $\neg p$ & $\neg p \vee q$ & $p \wedge q$ & $p \wedge (p \wedge q)$ & LHS & LHS $\Leftrightarrow$ RHS \\
+    \hline
+    T & T & F & T & T & T & T & T \\
+    T & F & F & F & F & F & F & T \\
+    F & T & T & T & F & F & F & T \\
+    F & F & T & T & F & F & F & T \\
+    \hline
+    \end{tabular}
+    \end{center}
+    
+    Where LHS = $(\neg p \vee q) \wedge (p \wedge (p \wedge q))$ and RHS = $(p \wedge q)$.
+    
+    \textbf{Step-by-step calculation:}
+    \begin{itemize}
+    \item Row 1: $(\neg T \vee T) \wedge (T \wedge (T \wedge T)) = (F \vee T) \wedge (T \wedge T) = T \wedge T = T$
+    \item Row 2: $(\neg T \vee F) \wedge (T \wedge (T \wedge F)) = (F \vee F) \wedge (T \wedge F) = F \wedge F = F$
+    \item Row 3: $(\neg F \vee T) \wedge (F \wedge (F \wedge T)) = (T \vee T) \wedge (F \wedge F) = T \wedge F = F$
+    \item Row 4: $(\neg F \vee F) \wedge (F \wedge (F \wedge F)) = (T \vee F) \wedge (F \wedge F) = T \wedge F = F$
+    \end{itemize}
+    
+
+    
+The biconditional is true in all rows, therefore the statement is \textbf{true}.
+
+$(\neg p \vee q) \wedge (p \wedge (p \wedge q)) \Leftrightarrow (p \wedge q)$ is \textbf{true}.
+    
 \end{document}
