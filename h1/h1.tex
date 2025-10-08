@@ -1,0 +1,154 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{Homework 1 - CPSC 326\\Solutions}
+\author{Dang Phung}
+\date{September 13, 2025}
+
+\begin{document}
+\maketitle
+
+\section*{Question 1 (10 points)}
+Let $\Sigma = \{0, 1, a, b, c, d\}$ be an alphabet.
+\begin{itemize}
+    \item What is $|\Sigma|$?
+    \item What is $|\Sigma^*|$?
+    \item What is $|\Sigma^+|$?
+    \item What is $|\Sigma^* - \Sigma^+|$?
+\end{itemize}
+
+\textbf{Answer:}
+\begin{itemize}
+    \item $|\Sigma| = 6$ (the alphabet contains 6 symbols)
+    \item $|\Sigma^*| = \infty$ (the Kleene closure contains all finite strings including the empty string)
+    \item $|\Sigma^+| = \infty$ (the positive closure contains all finite non-empty strings)
+    \item $|\Sigma^* - \Sigma^+| = 1$ (the only element in $\Sigma^*$ but not in $\Sigma^+$ is $\lambda$)
+\end{itemize}
+
+\section*{Question 2 (10 points)}
+Let the set $A = \{w \in \{a, b\}^* \mid |w| \leq 2\}$. List the elements of the set $A$.
+
+\textbf{Answer:}
+$A = \{\lambda, a, b, aa, ab, ba, bb\}$
+
+\begin{itemize}
+    \item Strings of length 0: $\lambda$
+    \item Strings of length 1: $a, b$
+    \item Strings of length 2: $aa, ab, ba, bb$
+\end{itemize}
+
+\section*{Question 3 (10 points)}
+Let $A = \{1, 2, 3, \ldots, n\}$. What is $\bigcup_{i=1}^{n} A$?
+
+\textbf{Answer:}
+$\bigcup_{i=1}^{n} A = A = \{1, 2, 3, \ldots, n\}$
+
+Since we are taking the union of $A$ with itself $n$ times, the result is just $A$.
+
+\section*{Question 4 (10 points)}
+What is $\mathcal{P}(\{a, b, c\})$? What is $|\mathcal{P}(\{a, b, c\}) - \mathcal{P}(\{a, b\})|$?
+
+\textbf{Answer:}
+$\mathcal{P}(\{a, b, c\}) = \{\emptyset, \{a\}, \{b\}, \{c\}, \{a, b\}, \{a, c\}, \{b, c\}, \{a, b, c\}\}$
+
+$\mathcal{P}(\{a, b\}) = \{\emptyset, \{a\}, \{b\}, \{a, b\}\}$
+
+$\mathcal{P}(\{a, b, c\}) - \mathcal{P}(\{a, b\}) = \{\{c\}, \{a, c\}, \{b, c\}, \{a, b, c\}\}$
+
+Therefore, $|\mathcal{P}(\{a, b, c\}) - \mathcal{P}(\{a, b\})| = 4$
+
+\section*{Question 5 (10 points)}
+For sets $A$ and $B$ prove or disprove the following: $A - B = B - A$.
+
+\textbf{Answer:}
+This statement is \textbf{false}. We disprove it with a counterexample:
+
+Let $A = \{1, 2\}$ and $B = \{2, 3\}$.
+
+Then:
+\begin{itemize}
+    \item $A - B = \{1\}$ (elements in $A$ but not in $B$)
+    \item $B - A = \{3\}$ (elements in $B$ but not in $A$)
+\end{itemize}
+
+Since $\{1\} \neq \{3\}$, we have $A - B \neq B - A$.
+
+The equality $A - B = B - A$ holds if and only if $A = B$.
+
+\section*{Question 6 (10 points)}
+What is $\mathcal{P}(\emptyset)$? What about $\mathcal{P}(\{\emptyset\})$?
+
+\textbf{Answer:}
+\begin{itemize}
+    \item $\mathcal{P}(\emptyset) = \{\emptyset\}$ (the power set of the empty set contains only empty set)
+    \item $\mathcal{P}(\{\emptyset\}) = \{\emptyset, \{\emptyset\}\}$ (the power set contains the empty set and the set containing the empty set)
+\end{itemize}
+
+\section*{Question 7 (10 points)}
+Let $f: \mathbb{N} \to \mathbb{N}$ be a function defined as follows: $f(x) = 2x$.
+\begin{itemize}
+    \item Is $f$ a bijection? Why or why not?
+    \item Let $E$ denote the set of even natural numbers. Now consider $f$ with the same definition but now $f: \mathbb{N} \to E$. Is $f$ a bijection?
+\end{itemize}
+
+\textbf{Answer:}
+\begin{itemize}
+    \item $f: \mathbb{N} \to \mathbb{N}$ is \textbf{not a bijection}. While $f$ is one to one, it is not surjective because odd numbers like 1, 3, 5, etc., are never mapped to by $f$. For example, there is no $x \in \mathbb{N}$ such that $f(x) = 1$.
+    
+    \item $f: \mathbb{N} \to E$ \textbf{is a bijection}. 
+    \begin{itemize}
+        \item Injective: If $f(x_1) = f(x_2)$, then $2x_1 = 2x_2$, so $x_1 = x_2$.
+        \item Surjective: For any even number $y \in E$, we have $y = 2k$ for some $k \in \mathbb{N}$, and $f(k) = 2k = y$.
+    \end{itemize}
+\end{itemize}
+
+\section*{Question 8 (10 points)}
+What is the error in the following proof that $1 = 2$? Let $a = b$, for some $a$ and $b$. Multiply both sides of the equation by $a$ to get $a \cdot a = a \cdot b$. Now subtract $b^2$ from both sides to get $a^2 - b^2 = ab - b^2$. Now apply factoring and get $(a + b)(a - b) = b(a - b)$. Divide each side of the equality by $(a - b)$ to get $a + b = b$. Finally, let $a$ and $b$ both be 1 and thus $2 = 1$.
+
+\textbf{Answer:}
+The error is when you divide both sides by $(a - b)$. Since we started with $a = b$, we have $a - b = 0$. Division by zero is undefined, making this step invalid. The algebraic steps up to $(a + b)(a - b) = b(a - b)$ is correct, but we can't divide $(a - b) = 0$ to show $a + b = b$.
+
+\section*{Question 9 (10 points)}
+Let $\Sigma$ be an alphabet.
+\begin{itemize}
+    \item Prove or disprove the following: $\Sigma^+ \cup \emptyset = \Sigma^*$
+    \item Is $\lambda \in \emptyset$?
+\end{itemize}
+
+\textbf{Answer:}
+\begin{itemize}
+    \item The statement $\Sigma^+ \cup \emptyset = \Sigma^*$ is \textbf{false}.
+    
+     $\Sigma^+ \cup \emptyset = \Sigma^+$ (because union with the empty set doesn't change a set).
+    
+    Also, $\Sigma^* = \Sigma^+ \cup \{\lambda\}$ (the Kleene closure includes the empty string).
+    
+    Therefore, $\Sigma^+ \cup \emptyset = \Sigma^+ \neq \Sigma^*$ (unless $\Sigma = \emptyset$, which is a contradiction for it being an alphabet).
+    
+    The correct statement would be: $\Sigma^+ \cup \{\lambda\} = \Sigma^*$
+    
+    \item No, $\lambda \notin \emptyset$. The empty set $\emptyset$ contains no elements at all which also doesn't include $\lambda$.
+\end{itemize}
+
+\section*{Question 10 (10 points)}
+What is $\sum_{x \in \mathcal{P}(\{a,b,c\})} |x|$?
+
+\textbf{Answer:}
+\begin{itemize}
+    \item $\emptyset$: $|\emptyset| = 0$
+    \item $\{a\}$: $|\{a\}| = 1$
+    \item $\{b\}$: $|\{b\}| = 1$
+    \item $\{c\}$: $|\{c\}| = 1$
+    \item $\{a, b\}$: $|\{a, b\}| = 2$
+    \item $\{a, c\}$: $|\{a, c\}| = 2$
+    \item $\{b, c\}$: $|\{b, c\}| = 2$
+    \item $\{a, b, c\}$: $|\{a, b, c\}| = 3$
+\end{itemize}
+
+Sum = $0 + 1 + 1 + 1 + 2 + 2 + 2 + 3 = 12$
+
+\end{document}
