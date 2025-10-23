@@ -151,112 +151,125 @@ Design a NFA that accepts the language $L_3$.
 The NFA uses nondeterminism to guess which digit will be the final digit that hasn't appeared before.
 
 \textbf{Strategy:}
-The NFA nondeterministically guesses which digit will appear for the first time at the end. For each possible final digit, we have a separate branch that:
-\begin{itemize}
-    \item Reads any other digits (but not that specific digit)
-    \item Reads that specific digit once at the end
-    \item Accepts
-\end{itemize}
+From the start state, when we read symbols, we nondeterministically choose which digit we're "watching for" as the final new digit. We have 10 branches (one for each digit 0-9), where each branch avoids seeing that specific digit until the very end.
 
 \textbf{States:}
 \begin{itemize}
-    \item $q_{\text{start}}$: Initial state
-    \item For digit 0: $q_{0a}$ (reading, avoiding 0), $q_{0b}$ (just read 0, accepting)
-    \item For digit 1: $q_{1a}$ (reading, avoiding 1), $q_{1b}$ (just read 1, accepting)
-    \item For digit 2: $q_{2a}$ (reading, avoiding 2), $q_{2b}$ (just read 2, accepting)
-    \item $\ldots$ (similar for digits 3-9)
-    \item For digit 9: $q_{9a}$ (reading, avoiding 9), $q_{9b}$ (just read 9, accepting)
+    \item $q_0$: Initial state (accepting, for single-digit strings)
+    \item Branches for each digit:
+    \begin{itemize}
+        \item $q_1, q_2$: Branch watching for digit 0
+        \item $q_3, q_4$: Branch watching for digit 1
+        \item $q_5, q_6$: Branch watching for digit 2
+        \item $q_7, q_8$: Branch watching for digit 3
+        \item $q_9, q_{10}$: Branch watching for digit 4
+        \item $q_{11}, q_{12}$: Branch watching for digit 5
+        \item $q_{13}, q_{14}$: Branch watching for digit 6
+        \item $q_{15}, q_{16}$: Branch watching for digit 7
+        \item $q_{17}, q_{18}$: Branch watching for digit 8
+        \item $q_{19}, q_{20}$: Branch watching for digit 9
+    \end{itemize}
+    \item Accepting states: $q_0, q_2, q_4, q_6, q_8, q_{10}, q_{12}, q_{14}, q_{16}, q_{18}, q_{20}$
 \end{itemize}
 
 \textbf{NFA Diagram:}
 
 \begin{center}
-    \begin{tikzpicture}[>=stealth', shorten >=1pt, auto, node distance=4cm, semithick]
-        \node[state, initial] (start) {$q_{\text{start}}$};
-        
-        % Branch for digit 0
-        \node[state] (q0a) [above right of=start, node distance=4cm] {$q_{0a}$};
-        \node[state, accepting] (q0b) [right of=q0a, node distance=3cm] {$q_{0b}$};
-        
-        % Branch for digit 1
-        \node[state] (q1a) [below of=q0a, node distance=2.2cm] {$q_{1a}$};
-        \node[state, accepting] (q1b) [right of=q1a, node distance=3cm] {$q_{1b}$};
-        
-        % Branch for digit 2
-        \node[state] (q2a) [below of=q1a, node distance=2.2cm] {$q_{2a}$};
-        \node[state, accepting] (q2b) [right of=q2a, node distance=3cm] {$q_{2b}$};
-        
-        % Dots to indicate more branches
-        \node (dots1) [below of=q2a, node distance=1.8cm] {$\vdots$};
-        \node (dots2) [below of=q2b, node distance=1.8cm] {$\vdots$};
-        
-        % Branch for digit 9
-        \node[state] (q9a) [below of=dots1, node distance=1.8cm] {$q_{9a}$};
-        \node[state, accepting] (q9b) [right of=q9a, node distance=3cm] {$q_{9b}$};
-        
-        \path[->]
-        % Epsilon transitions from start to each branch
-        (start) edge node [above left, pos=0.3] {$\varepsilon$} (q0a)
-        (start) edge node [above, pos=0.4] {$\varepsilon$} (q1a)
-        (start) edge node [above, pos=0.5] {$\varepsilon$} (q2a)
-        (start) edge node [below left, pos=0.3] {$\varepsilon$} (q9a)
-        
-        % Branch 0: read anything except 0, then read 0
-        (q0a) edge [loop above] node {$1,2,3,4,5,6,7,8,9$} (q0a)
-        (q0a) edge node [above] {$0$} (q0b)
-        
-        % Branch 1: read anything except 1, then read 1
-        (q1a) edge [loop above] node {$0,2,3,4,5,6,7,8,9$} (q1a)
-        (q1a) edge node [above] {$1$} (q1b)
-        
-        % Branch 2: read anything except 2, then read 2
-        (q2a) edge [loop above] node {$0,1,3,4,5,6,7,8,9$} (q2a)
-        (q2a) edge node [above] {$2$} (q2b)
-        
-        % Branch 9: read anything except 9, then read 9
-        (q9a) edge [loop below] node {$0,1,2,3,4,5,6,7,8$} (q9a)
-        (q9a) edge node [above] {$9$} (q9b);
-    \end{tikzpicture}
-    \end{center}
+\begin{tikzpicture}[>=stealth', shorten >=1pt, auto, node distance=5cm, semithick]
+    \node[state, initial, accepting] (q0) {$q_0$};
+    
+    % Branch for watching digit 0: q1 -> q2
+    \node[state] (q1) [above right of=q0, node distance=6cm] {$q_1$};
+    \node[state, accepting] (q2) [right of=q1, node distance=4cm] {$q_2$};
+    
+    % Branch for watching digit 1: q3 -> q4
+    \node[state] (q3) [below of=q1, node distance=3cm] {$q_3$};
+    \node[state, accepting] (q4) [right of=q3, node distance=4cm] {$q_4$};
+    
+    % Branch for watching digit 2: q5 -> q6
+    \node[state] (q5) [below of=q3, node distance=3cm] {$q_5$};
+    \node[state, accepting] (q6) [right of=q5, node distance=4cm] {$q_6$};
+    
+    % Dots to indicate more branches
+    \node (dots1) [below of=q5, node distance=2.5cm] {$\vdots$};
+    \node (dots2) [below of=q6, node distance=2.5cm] {$\vdots$};
+    
+    % Branch for watching digit 9: q19 -> q20
+    \node[state] (q19) [below of=dots1, node distance=2.5cm] {$q_{19}$};
+    \node[state, accepting] (q20) [right of=q19, node distance=4cm] {$q_{20}$};
+    
+    \path[->]
+    % Branch for digit 0 (q1 -> q2)
+    (q0) edge [bend left=15] node [above left, pos=0.2] {$1,\ldots,9$} (q1)
+    (q0) edge [bend left=20] node [above, pos=0.15] {$0$} (q2)
+    
+    % q1: reading non-0 digits, watching for 0
+    (q1) edge [loop above] node {$1,2,3,4,5,6,7,8,9$} (q1)
+    (q1) edge node [above] {$0$} (q2)
+    
+    % Branch for digit 1 (q3 -> q4)
+    (q0) edge [bend left=10] node [above left, pos=0.25] {$0,2,\ldots,9$} (q3)
+    (q0) edge [bend left=15] node [above, pos=0.2] {$1$} (q4)
+    
+    % q3: reading non-1 digits, watching for 1
+    (q3) edge [loop above] node {$0,2,3,4,5,6,7,8,9$} (q3)
+    (q3) edge node [above] {$1$} (q4)
+    
+    % Branch for digit 2 (q5 -> q6)
+    (q0) edge [bend left=5] node [above left, pos=0.3] {$0,1,3,\ldots,9$} (q5)
+    (q0) edge [bend left=10] node [above, pos=0.25] {$2$} (q6)
+    
+    % q5: reading non-2 digits, watching for 2
+    (q5) edge [loop above] node {$0,1,3,4,5,6,7,8,9$} (q5)
+    (q5) edge node [above] {$2$} (q6)
+    
+    % Branch for digit 9 (q19 -> q20)
+    (q0) edge [bend right=15] node [below left, pos=0.2] {$0,\ldots,8$} (q19)
+    (q0) edge [bend right=20] node [below, pos=0.15] {$9$} (q20)
+    
+    % q19: reading non-9 digits, watching for 9
+    (q19) edge [loop below] node {$0,1,2,3,4,5,6,7,8$} (q19)
+    (q19) edge node [above] {$9$} (q20);
+\end{tikzpicture}
+\end{center}
 
 \textbf{Explanation:}
 
-The NFA has 21 total states: 1 start state + 10 branches (one for each digit 0-9), where each branch has 2 states.
+The NFA has 21 states total ($q_0$ through $q_{20}$), organized as follows:
+\begin{itemize}
+    \item $q_0$: Starting state (also accepting for single-digit strings)
+    \item 10 branches, each with 2 states, one for each digit 0-9:
+    \begin{itemize}
+        \item States $q_1, q_3, q_5, q_7, q_9, q_{11}, q_{13}, q_{15}, q_{17}, q_{19}$: "Avoiding" states where we read any digit except the one we're watching for
+        \item States $q_2, q_4, q_6, q_8, q_{10}, q_{12}, q_{14}, q_{16}, q_{18}, q_{20}$: "Found" states (accepting) where we just read the digit we were watching for
+    \end{itemize}
+\end{itemize}
 
 How it works:
 \begin{enumerate}
-    \item From $q_{\text{start}}$, use $\varepsilon$-transitions to nondeterministically guess which digit will be the final new digit
-    \item If we guess digit 0 will be the final new digit:
+    \item From $q_0$, nondeterministically choose which digit will be the final new digit
+    \item For example, to watch for digit 0:
     \begin{itemize}
-        \item Go to state $q_{0a}$
-        \item Loop in $q_{0a}$ reading any digit 1-9 (but never 0)
-        \item Read 0 and go to accepting state $q_{0b}$
+        \item Go to $q_1$ by reading any digit 1-9
+        \item Stay in $q_1$ reading more digits 1-9 (avoiding 0)
+        \item Read 0 and go to accepting state $q_2$
     \end{itemize}
-    \item If we guess digit 1 will be the final new digit:
-    \begin{itemize}
-        \item Go to state $q_{1a}$
-        \item Loop in $q_{1a}$ reading any digit except 1
-        \item Read 1 and go to accepting state $q_{1b}$
-    \end{itemize}
-    \item Similar logic applies for guessing digits 2 through 9
+    \item Similarly for digits 1-9, using states $(q_3, q_4), (q_5, q_6), \ldots, (q_{19}, q_{20})$
 \end{enumerate}
 
 \textbf{Example:}
 
 For string $w = 237$ (where 7 appears for the first time at the end):
 \begin{itemize}
-    \item Start: $q_{\text{start}}$
-    \item Guess 7 is final: $q_{\text{start}} \xrightarrow{\varepsilon} q_{7a}$
-    \item Read 2: $q_{7a} \xrightarrow{2} q_{7a}$
-    \item Read 3: $q_{7a} \xrightarrow{3} q_{7a}$
-    \item Read 7: $q_{7a} \xrightarrow{7} q_{7b}$ (accept)
+    \item Read 2: $q_0 \xrightarrow{2} q_{15}$ (nondeterministically choose to watch for 7)
+    \item Read 3: $q_{15} \xrightarrow{3} q_{15}$ (3 is not 7, stay in $q_{15}$)
+    \item Read 7: $q_{15} \xrightarrow{7} q_{16}$ (accept!)
 \end{itemize}
 
-For string $w = 5$ (single digit, first occurrence):
+For string $w = 5$ (single digit):
 \begin{itemize}
-    \item Start: $q_{\text{start}}$
-    \item Guess 5 is final: $q_{\text{start}} \xrightarrow{\varepsilon} q_{5a}$
-    \item Read 5: $q_{5a} \xrightarrow{5} q_{5b}$ (accept)
+    \item Read 5: $q_0 \xrightarrow{5} q_{12}$ (accept immediately)
+    \item Or stay in $q_0$ which is also accepting
 \end{itemize}
 
 \end{document}
